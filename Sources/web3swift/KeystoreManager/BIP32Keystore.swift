@@ -270,10 +270,10 @@ public class BIP32Keystore: AbstractKeystore {
         return data
     }
     
-    public func serializeRootNodeToString(password: String = "web3swift") throws -> String {
+    public func serializeRootNodeToString(password: String = "web3swift", serializePublic: Bool = false) throws -> String {
         guard let decryptedRootNode = try? self.getPrefixNodeData(password) else {throw AbstractKeystoreError.encryptionError("Failed to decrypt a keystore")}
         guard let rootNode = HDNode(decryptedRootNode) else {throw AbstractKeystoreError.encryptionError("Failed to deserialize a root node")}
-        guard let string = rootNode.serializeToString(serializePublic: false) else {throw AbstractKeystoreError.encryptionError("Failed to deserialize a root node")}
+        guard let string = rootNode.serializeToString(serializePublic: serializePublic) else {throw AbstractKeystoreError.encryptionError("Failed to deserialize a root node")}
         return string
     }
 }
